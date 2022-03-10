@@ -73,7 +73,7 @@ with open(DEST / "index.rst", "w") as index:
         tags.append(tag)
 
         with open(DEST / "{}.rst".format(tag), "w") as page:
-            page.write("Pyrogram " + tag + "\n" + "=" * (len(tag) + 9) + "\n\n")
+            page.write(f"Pyrogram {tag}" + "\n" + "=" * (len(tag) + 9) + "\n\n")
             page.write("\t\tReleased on " + str(date) + "\n\n")
             page.write("- :download:`Source Code (zip) <{}>`\n".format(zipball_url))
             page.write("- :download:`Source Code (tar.gz) <{}>`\n\n".format(tarball_url))

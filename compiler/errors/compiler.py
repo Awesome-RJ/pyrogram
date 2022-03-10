@@ -41,13 +41,10 @@ def start():
     shutil.rmtree(DEST, ignore_errors=True)
     os.makedirs(DEST)
 
-    files = [i for i in os.listdir("{}/source".format(HOME))]
+    files = list(os.listdir("{}/source".format(HOME)))
 
     with open(NOTICE_PATH, encoding="utf-8") as f:
-        notice = []
-
-        for line in f.readlines():
-            notice.append("# {}".format(line).strip())
+        notice = ["# {}".format(line).strip() for line in f.readlines()]
 
         notice = "\n".join(notice)
 
@@ -136,7 +133,7 @@ def start():
     print("Compiling Errors: [100%]")
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     HOME = "."
     DEST = "../../pyrogram/errors/exceptions"
     NOTICE_PATH = "../../NOTICE"

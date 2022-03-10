@@ -50,7 +50,7 @@ def generate(source_path, base):
                 if not i.startswith("__"):
                     build("/".join([path, i]), level=level + 1)
             except NotADirectoryError:
-                with open(path + "/" + i, encoding="utf-8") as f:
+                with open(f'{path}/{i}', encoding="utf-8") as f:
                     p = ast.parse(f.read())
 
                 for node in ast.walk(p):
@@ -60,14 +60,19 @@ def generate(source_path, base):
                 else:
                     continue
 
-                full_path = os.path.basename(path) + "/" + snek(name).replace("_", "-") + ".rst"
+                full_path = (
+                    f'{os.path.basename(path)}/'
+                    + snek(name).replace("_", "-")
+                    + ".rst"
+                )
+
 
                 if level:
-                    full_path = base + "/" + full_path
+                    full_path = f'{base}/{full_path}'
 
-                os.makedirs(os.path.dirname(DESTINATION + "/" + full_path), exist_ok=True)
+                os.makedirs(os.path.dirname(f'{DESTINATION}/{full_path}'), exist_ok=True)
 
-                with open(DESTINATION + "/" + full_path, "w", encoding="utf-8") as f:
+                with open(f'{DESTINATION}/{full_path}', "w", encoding="utf-8") as f:
                     f.write(
                         page_template.format(
                             title=name,
@@ -568,10 +573,10 @@ def start():
 
     shutil.rmtree(DESTINATION, ignore_errors=True)
 
-    with open(HOME + "/template/page.txt", encoding="utf-8") as f:
+    with open(f'{HOME}/template/page.txt', encoding="utf-8") as f:
         page_template = f.read()
 
-    with open(HOME + "/template/toctree.txt", encoding="utf-8") as f:
+    with open(f'{HOME}/template/toctree.txt', encoding="utf-8") as f:
         toctree = f.read()
 
     generate(TYPES_PATH, TYPES_BASE)
@@ -580,7 +585,7 @@ def start():
     pyrogram_api()
 
 
-if "__main__" == __name__:
+if __name__ == "__main__":
     FUNCTIONS_PATH = "../../pyrogram/raw/functions"
     TYPES_PATH = "../../pyrogram/raw/types"
     BASE_PATH = "../../pyrogram/raw/base"
